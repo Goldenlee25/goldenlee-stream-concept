@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goldenlee Livestream Concept</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Starting Soon Screen -->
+    <div id="startingScreen" class="screen active">
+        <div class="starting-container">
+            <div class="logo-container">
+                <img src="assets/logo.svg" alt="Goldenlee" class="logo-main">
+            </div>
+            
+            <div class="mascot-container">
+                <div class="mascot">
+                    <img src="assets/mascot.png" alt="Goldenlee Mascot" class="mascot-image">
+                    <div class="mascot-glow"></div>
+                </div>
+            </div>
+
+            <div class="loading-section">
+                <div class="status-text">INITIALISING...</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="percentage" id="percentage">0%</div>
+                <div class="status-label">STREAM STARTING</div>
+            </div>
+
+            <div class="countdown-timer" id="countdownTimer">04:32</div>
+        </div>
+    </div>
+
+    <!-- Main Livestream Screen -->
+    <div id="mainScreen" class="screen">
+        <div class="livestream-container">
+            <!-- Top Bar with Logo and Status -->
+            <div class="top-bar">
+                <div class="logo-section">
+                    <img src="assets/logo.svg" alt="Goldenlee" class="logo-small">
+                </div>
+                <div class="status-indicator">
+                    <span class="live-dot"></span>
+                    <span class="live-text">GOLDENLEE LIVE</span>
+                </div>
+                <div class="spacer"></div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="content-wrapper">
+                <!-- Webcam Section (Left) -->
+                <div class="webcam-section">
+                    <div class="webcam-container">
+                        <div class="webcam-placeholder">WEBCAM</div>
+                        <div class="webcam-aura">
+                            <div class="aura-glow"></div>
+                            <div class="aura-scanlines"></div>
+                            <div class="aura-particles">
+                                <span class="particle"></span>
+                                <span class="particle"></span>
+                                <span class="particle"></span>
+                                <span class="particle"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="webcam-label">Creator</div>
+                </div>
+
+                <!-- Gameplay Section (Center) -->
+                <div class="gameplay-section">
+                    <div class="gameplay-area">
+                        <div class="gameplay-placeholder">GAMEPLAY AREA</div>
+                    </div>
+                </div>
+
+                <!-- Chat Section (Right) -->
+                <div class="chat-section">
+                    <div class="chat-header">
+                        <span class="chat-title">CHAT</span>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message">
+                            <span class="username">GoldenFan42</span>
+                            <span class="message">this stream vibe is different</span>
+                        </div>
+                        <div class="chat-message">
+                            <span class="username">PixelWanderer</span>
+                            <span class="message">love the aesthetic</span>
+                        </div>
+                        <div class="chat-message">
+                            <span class="username">ShadowCoder</span>
+                            <span class="message">that webcam border tho</span>
+                        </div>
+                        <div class="chat-message">
+                            <span class="username">NeonDreams</span>
+                            <span class="message">so clean</span>
+                        </div>
+                        <div class="chat-message">
+                            <span class="username">StreamVibes</span>
+                            <span class="message">pogggg</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subscriber Notification (Center Top) -->
+            <div id="subscriberNotification" class="subscriber-notification">
+                <div class="notification-content">
+                    <div class="notification-label">CONNECTION ESTABLISHED</div>
+                    <div class="notification-username" id="notificationUsername">ExampleUser</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Control Panel (Development/Testing) -->
+    <div class="control-panel">
+        <button id="startBtn" class="control-btn">START STREAM</button>
+        <button id="testSubBtn" class="control-btn">TEST SUBSCRIBER</button>
+        <button id="testGlitchBtn" class="control-btn">TEST GLITCH</button>
+        <button id="resetBtn" class="control-btn">RESET</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
