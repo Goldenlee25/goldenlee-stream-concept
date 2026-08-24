@@ -5,10 +5,9 @@
 const state = {
     currentScreen: 'starting', // 'starting' or 'main'
     isStreamActive: false,
-    countdownSeconds: 272, // 4:32 in seconds
-    countdownInterval: null,
-    progressInterval: null,
-    progressPercentage: 0,
+    loadingDuration: 20000, // 20 seconds in milliseconds
+    loadingStartTime: null,
+    loadingInterval: null,
 };
 
 // ===========================
@@ -18,8 +17,6 @@ const state = {
 const startingScreen = document.getElementById('startingScreen');
 const mainScreen = document.getElementById('mainScreen');
 const progressBar = document.getElementById('progressBar');
-const percentageDisplay = document.getElementById('percentage');
-const countdownDisplay = document.getElementById('countdownTimer');
 const subscriberNotification = document.getElementById('subscriberNotification');
 const notificationUsername = document.getElementById('notificationUsername');
 const chatMessages = document.getElementById('chatMessages');
@@ -34,19 +31,13 @@ const resetBtn = document.getElementById('resetBtn');
 // UTILITY FUNCTIONS
 // ===========================
 
-function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-}
-
-function updateCountdownDisplay() {
-    countdownDisplay.textContent = formatTime(state.countdownSeconds);
-}
-
 function updateProgressBar() {
-    progressBar.style.width = `${state.progressPercentage}%`;
-    percentageDisplay.textContent = `${state.progressPercentage}%`;
+    if (!state.loadingStartTime) return;
+    
+    const elapsed = Date.now() - state.loadingStartTime;
+    const progress = Math.min((elapsed / state.loadingDuration) * 100, 100);
+    
+    progressBar.style.width = `${progress}%`;
 }
 
 // ===========================
@@ -72,47 +63,37 @@ function switchToScreen(screenName) {
 }
 
 // ===========================
-// COUNTDOWN & LOADING LOGIC
+// LOADING BAR LOGIC
 // ===========================
 
-function startCountdown() {
-    state.countdownSeconds = 272; // Reset to 4:32
-    state.progressPercentage = 0;
-    updateCountdownDisplay();
-    updateProgressBar();
+function startLoading() {
+    state.loadingStartTime = Date.now();
+    state.isStreamActive = false;
+    progressBar.style.width = '0%';
 
-    // Clear any existing intervals
-    if (state.countdownInterval) clearInterval(state.countdownInterval);
-    if (state.progressInterval) clearInterval(state.progressInterval);
+    // Clear any existing interval
+    if (state.loadingInterval) clearInterval(state.loadingInterval);
 
-    // Countdown timer
-    state.countdownInterval = setInterval(() => {
-        state.countdownSeconds--;
-        updateCountdownDisplay();
+    // Update progress bar smoothly
+    state.loadingInterval = setInterval(() => {
+        updateProgressBar();
 
-        if (state.countdownSeconds <= 0) {
-            clearInterval(state.countdownInterval);
-            // Countdown complete - show "CONNECTION ESTABLISHED" and transition
+        // When bar is full (20 seconds), transition to main screen
+        const elapsed = Date.now() - state.loadingStartTime;
+        if (elapsed >= state.loadingDuration) {
+            clearInterval(state.loadingInterval);
+            progressBar.style.width = '100%';
+            
+            // Transition to main screen after a brief delay
             setTimeout(() => {
                 switchToScreen('main');
             }, 500);
         }
-    }, 1000);
-
-    // Progress bar
-    state.progressInterval = setInterval(() => {
-        if (state.progressPercentage < 100) {
-            state.progressPercentage++;
-            updateProgressBar();
-        } else {
-            clearInterval(state.progressInterval);
-        }
-    }, 26); // ~272 iterations for 272 seconds
+    }, 50); // Update every 50ms for smooth animation
 }
 
-function stopCountdown() {
-    if (state.countdownInterval) clearInterval(state.countdownInterval);
-    if (state.progressInterval) clearInterval(state.progressInterval);
+function stopLoading() {
+    if (state.loadingInterval) clearInterval(state.loadingInterval);
 }
 
 // ===========================
@@ -204,7 +185,7 @@ function triggerSubscriberEvent() {
 
 startBtn.addEventListener('click', () => {
     if (state.currentScreen === 'starting' && !state.isStreamActive) {
-        startCountdown();
+        startLoading();
     }
 });
 
@@ -217,18 +198,16 @@ testGlitchBtn.addEventListener('click', () => {
 });
 
 resetBtn.addEventListener('click', () => {
-    // Stop all intervals
-    stopCountdown();
+    // Stop loading
+    stopLoading();
 
     // Reset state
     state.currentScreen = 'starting';
     state.isStreamActive = false;
-    state.countdownSeconds = 272;
-    state.progressPercentage = 0;
+    state.loadingStartTime = null;
 
     // Reset UI
-    updateCountdownDisplay();
-    updateProgressBar();
+    progressBar.style.width = '0%';
     subscriberNotification.classList.remove('active');
 
     // Switch screens
@@ -288,56 +267,25 @@ document.addEventListener('keydown', (e) => {
 // ===========================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Set initial display
-    updateCountdownDisplay();
-    updateProgressBar();
-
-    // You can optionally auto-start the countdown for demonstration
-    // Uncomment the line below to auto-start:
-    // startCountdown();
+    // Set initial progress bar
+    progressBar.style.width = '0%';
 });
-
-// ===========================
-// OPTIONAL: AUTO-DEMO MODE
-// ===========================
-
-// Uncomment this section to have the prototype automatically demo itself
-/*
-window.addEventListener('load', () => {
-    console.log('Goldenlee Stream Concept loaded. Starting demo...');
-    
-    // Start countdown after 2 seconds
-    setTimeout(() => {
-        startCountdown();
-    }, 2000);
-
-    // Test subscriber event 10 seconds after stream starts
-    setTimeout(() => {
-        triggerSubscriberEvent();
-    }, 12000);
-
-    // Test another subscriber event 15 seconds later
-    setTimeout(() => {
-        triggerSubscriberEvent();
-    }, 27000);
-});
-*/
 
 // ===========================
 // CONSOLE HELPERS (For Development)
 // ===========================
 
 window.streamDebug = {
-    startCountdown: () => startCountdown(),
-    stopCountdown: () => stopCountdown(),
+    startLoading: () => startLoading(),
+    stopLoading: () => stopLoading(),
     testSubscriber: () => triggerSubscriberEvent(),
     testGlitch: () => triggerGlitchEffect(),
     reset: () => resetBtn.click(),
     state: () => console.table(state),
     help: () => console.log(`
         Available debug commands:
-        - streamDebug.startCountdown()  : Start the countdown
-        - streamDebug.stopCountdown()   : Stop the countdown
+        - streamDebug.startLoading()    : Start the 20-second loading bar
+        - streamDebug.stopLoading()     : Stop the loading bar
         - streamDebug.testSubscriber()  : Trigger a subscriber event
         - streamDebug.testGlitch()      : Trigger a glitch effect
         - streamDebug.reset()           : Reset everything
