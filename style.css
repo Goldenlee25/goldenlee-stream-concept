@@ -1,0 +1,808 @@
+/* ===========================
+   GLOBAL STYLES & VARIABLES
+   =========================== */
+
+:root {
+    --primary-bg: #0a0a0a;
+    --secondary-bg: #1a1a1a;
+    --tertiary-bg: #2a2a2a;
+    --accent-green: #00ff41;
+    --accent-green-dim: #00cc33;
+    --accent-green-bright: #00ff5e;
+    --dark-green: #004d1a;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --border-color: #333333;
+    --glow-color: rgba(0, 255, 65, 0.3);
+    --glow-color-bright: rgba(0, 255, 65, 0.8);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+/* ===========================
+   SCREEN MANAGEMENT
+   =========================== */
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+    background: var(--primary-bg);
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===========================
+   STARTING SOON SCREEN
+   =========================== */
+
+#startingScreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-bg) 0%, #0f0f1a 100%);
+}
+
+.starting-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    text-align: center;
+}
+
+.logo-container {
+    animation: logoFadeIn 1s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes logoFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo-main {
+    height: 80px;
+    filter: drop-shadow(0 0 20px var(--glow-color));
+}
+
+/* Mascot Section */
+.mascot-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: mascotFadeIn 1.5s ease-out forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+}
+
+@keyframes mascotFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.mascot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.mascot-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px var(--glow-color)) brightness(1.1);
+    animation: mascotFloat 6s ease-in-out infinite;
+}
+
+@keyframes mascotFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.mascot-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: glowPulse 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Loading Section */
+.loading-section {
+    animation: loadingFadeIn 2s ease-out forwards;
+    opacity: 0;
+    animation-delay: 1s;
+}
+
+@keyframes loadingFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.status-text {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--accent-green);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.progress-bar-container {
+    width: 300px;
+    height: 8px;
+    background: var(--tertiary-bg);
+    border: 1px solid var(--accent-green);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px var(--glow-color);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-green-bright) 100%);
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--accent-green);
+}
+
+.percentage {
+    font-size: 16px;
+    color: var(--accent-green);
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.status-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-top: 15px;
+}
+
+.countdown-timer {
+    font-size: 48px;
+    color: var(--accent-green);
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-top: 30px;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 20px var(--glow-color);
+}
+
+/* ===========================
+   MAIN LIVESTREAM SCREEN
+   =========================== */
+
+.livestream-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-bg);
+}
+
+/* Top Bar */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: linear-gradient(180deg, var(--secondary-bg) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border-color);
+    height: 60px;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo-small {
+    height: 40px;
+    filter: drop-shadow(0 0 10px var(--glow-color));
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    background: rgba(0, 255, 65, 0.1);
+    border: 1px solid var(--accent-green);
+    border-radius: 4px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    animation: livePulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 10px var(--accent-green);
+}
+
+@keyframes livePulse {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 10px var(--accent-green);
+    }
+    50% {
+        opacity: 0.5;
+        box-shadow: 0 0 20px var(--accent-green);
+    }
+}
+
+.live-text {
+    color: var(--accent-green);
+}
+
+.spacer {
+    flex: 1;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    display: flex;
+    flex: 1;
+    gap: 15px;
+    padding: 15px;
+    overflow: hidden;
+}
+
+/* Webcam Section */
+.webcam-section {
+    flex: 0 0 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.webcam-container {
+    position: relative;
+    flex: 1;
+    background: var(--secondary-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    aspect-ratio: 9 / 16;
+    min-height: 300px;
+}
+
+.webcam-placeholder {
+    font-size: 18px;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    z-index: 2;
+}
+
+/* Webcam Aura - The magical border effect */
+.webcam-aura {
+    position: absolute;
+    inset: -15px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.aura-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, var(--glow-color), transparent);
+    border-radius: 8px;
+    animation: auraGlow 4s ease-in-out infinite;
+}
+
+@keyframes auraGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px var(--glow-color), inset 0 0 20px var(--glow-color);
+        opacity: 0.4;
+    }
+    50% {
+        box-shadow: 0 0 40px var(--glow-color-bright), inset 0 0 30px var(--glow-color);
+        opacity: 0.7;
+    }
+}
+
+.aura-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 65, 0.03) 0px,
+        rgba(0, 255, 65, 0.03) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    border-radius: 8px;
+    animation: scanlineFlicker 0.15s ease-in-out infinite;
+}
+
+@keyframes scanlineFlicker {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.aura-particles {
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    animation: particleFloat 6s ease-in-out infinite;
+}
+
+.particle:nth-child(1) {
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+    top: 30%;
+    right: 15%;
+    animation-delay: 1.5s;
+}
+
+.particle:nth-child(3) {
+    bottom: 20%;
+    left: 30%;
+    animation-delay: 3s;
+}
+
+.particle:nth-child(4) {
+    bottom: 15%;
+    right: 25%;
+    animation-delay: 4.5s;
+}
+
+@keyframes particleFloat {
+    0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(20px, -20px);
+        opacity: 0.8;
+    }
+}
+
+.webcam-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* Gameplay Section */
+.gameplay-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    min-width: 0;
+}
+
+.gameplay-area {
+    flex: 1;
+    height: 100%;
+    background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--tertiary-bg) 100%);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.gameplay-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 65, 0.03) 2px,
+        rgba(0, 255, 65, 0.03) 4px
+    );
+    pointer-events: none;
+    animation: scanlineFlicker 0.15s ease-in-out infinite;
+}
+
+.gameplay-placeholder {
+    font-size: 32px;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    z-index: 1;
+}
+
+/* Chat Section */
+.chat-section {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(26, 26, 26, 0.8);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.chat-header {
+    padding: 12px 15px;
+    background: linear-gradient(180deg, var(--tertiary-bg) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chat-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-green);
+}
+
+.chat-message {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    animation: chatMessageSlide 0.3s ease-out;
+}
+
+@keyframes chatMessageSlide {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.username {
+    color: var(--accent-green);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.message {
+    color: var(--text-secondary);
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* Subscriber Notification */
+.subscriber-notification {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.subscriber-notification.active {
+    animation: notificationAppear 3s ease-out forwards;
+}
+
+@keyframes notificationAppear {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+    }
+}
+
+.notification-content {
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.15), rgba(0, 255, 65, 0.05));
+    border: 2px solid var(--accent-green);
+    border-radius: 8px;
+    padding: 20px 40px;
+    text-align: center;
+    box-shadow: 0 0 30px var(--glow-color-bright);
+    backdrop-filter: blur(10px);
+}
+
+.notification-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+.notification-username {
+    font-size: 28px;
+    color: var(--accent-green);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* ===========================
+   GLITCH EFFECTS
+   =========================== */
+
+.webcam-container.glitch-active {
+    animation: glitchShake 0.3s ease-in-out;
+}
+
+@keyframes glitchShake {
+    0%, 100% {
+        transform: translate(0);
+    }
+    25% {
+        transform: translate(-5px, -5px);
+    }
+    50% {
+        transform: translate(5px, 5px);
+    }
+    75% {
+        transform: translate(-5px, 5px);
+    }
+}
+
+.gameplay-area.glitch-active {
+    animation: glitchFlash 0.4s ease-in-out;
+}
+
+@keyframes glitchFlash {
+    0%, 100% {
+        background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--tertiary-bg) 100%);
+        box-shadow: none;
+    }
+    50% {
+        background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(0, 255, 65, 0.05));
+        box-shadow: 0 0 30px var(--glow-color-bright);
+    }
+}
+
+.webcam-aura.intensity-high {
+    animation: auraGlowIntense 0.3s ease-out !important;
+}
+
+@keyframes auraGlowIntense {
+    0% {
+        box-shadow: 0 0 20px var(--glow-color), inset 0 0 20px var(--glow-color);
+    }
+    50% {
+        box-shadow: 0 0 60px var(--accent-green-bright), inset 0 0 40px var(--accent-green-bright);
+    }
+    100% {
+        box-shadow: 0 0 20px var(--glow-color), inset 0 0 20px var(--glow-color);
+    }
+}
+
+/* ===========================
+   CONTROL PANEL
+   =========================== */
+
+.control-panel {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    padding: 10px 15px;
+    background: rgba(0, 255, 65, 0.1);
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.control-btn:hover {
+    background: rgba(0, 255, 65, 0.2);
+    box-shadow: 0 0 15px var(--glow-color);
+    transform: translateY(-2px);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+@media (max-width: 1400px) {
+    .webcam-section {
+        flex: 0 0 240px;
+    }
+
+    .chat-section {
+        flex: 0 0 260px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .content-wrapper {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .webcam-section {
+        flex: 0 0 220px;
+    }
+
+    .chat-section {
+        flex: 0 0 240px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .webcam-section {
+        flex: 0 0 200px;
+    }
+
+    .chat-section {
+        flex: 0 0 220px;
+    }
+
+    .gameplay-placeholder {
+        font-size: 24px;
+    }
+}
+
+/* ===========================
+   ANIMATIONS & TRANSITIONS
+   =========================== */
+
+.screen {
+    animation: screenTransition 0.6s ease-in-out;
+}
+
+@keyframes screenTransition {
+    from {
+        filter: brightness(1);
+    }
+    to {
+        filter: brightness(1);
+    }
+}
+
+/* Screen glitch transition effect */
+.screen.transitioning {
+    animation: transitionGlitch 0.4s ease-in-out;
+}
+
+@keyframes transitionGlitch {
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.2) contrast(1.3);
+    }
+}
