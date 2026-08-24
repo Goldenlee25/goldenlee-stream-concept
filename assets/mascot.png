@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascot Placeholder</title>
+</head>
+<body style="margin: 0; padding: 0; background: #0a0a0a; display: flex; align-items: center; justify-content: center; height: 100vh;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+        <defs>
+            <style>
+                .mascot-body { fill: #1a1a2e; stroke: #00ff41; stroke-width: 2; }
+                .mascot-glow { fill: #00ff41; opacity: 0.8; }
+                .mascot-accent { fill: #00ff41; }
+                .mascot-dark { fill: #0a0a0a; }
+            </style>
+        </defs>
+        
+        <!-- Head -->
+        <circle cx="150" cy="100" r="60" class="mascot-body"/>
+        
+        <!-- Eyes -->
+        <circle cx="130" cy="85" r="8" class="mascot-glow"/>
+        <circle cx="170" cy="85" r="8" class="mascot-glow"/>
+        <circle cx="132" cy="83" r="4" class="mascot-dark"/>
+        <circle cx="172" cy="83" r="4" class="mascot-dark"/>
+        
+        <!-- Mouth -->
+        <path d="M 140 110 Q 150 120 160 110" stroke="#00ff41" stroke-width="2" fill="none" stroke-linecap="round"/>
+        
+        <!-- Body -->
+        <rect x="110" y="160" width="80" height="100" rx="10" class="mascot-body"/>
+        
+        <!-- Chest accent -->
+        <polygon points="150,180 140,200 160,200" class="mascot-accent"/>
+        
+        <!-- Arms -->
+        <rect x="70" y="180" width="40" height="15" rx="7" class="mascot-body"/>
+        <rect x="190" y="180" width="40" height="15" rx="7" class="mascot-body"/>
+        
+        <!-- Hand accent -->
+        <circle cx="65" cy="187" r="8" class="mascot-accent"/>
+        <circle cx="235" cy="187" r="8" class="mascot-accent"/>
+        
+        <!-- Legs -->
+        <rect x="120" y="260" width="15" height="60" rx="7" class="mascot-body"/>
+        <rect x="165" y="260" width="15" height="60" rx="7" class="mascot-body"/>
+        
+        <!-- Feet -->
+        <ellipse cx="127.5" cy="325" rx="12" ry="8" class="mascot-accent"/>
+        <ellipse cx="172.5" cy="325" rx="12" ry="8" class="mascot-accent"/>
+        
+        <!-- Aura glow effect -->
+        <circle cx="150" cy="180" r="120" fill="none" stroke="#00ff41" stroke-width="1" opacity="0.3"/>
+        <circle cx="150" cy="180" r="140" fill="none" stroke="#00ff41" stroke-width="1" opacity="0.15"/>
+    </svg>
+</body>
+</html>
