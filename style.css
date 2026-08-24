@@ -62,6 +62,7 @@ html, body {
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--primary-bg) 0%, #0f0f1a 100%);
+    padding: 20px;
 }
 
 .starting-container {
@@ -71,6 +72,7 @@ html, body {
     justify-content: center;
     gap: 40px;
     text-align: center;
+    max-width: 600px;
 }
 
 .logo-container {
@@ -254,6 +256,7 @@ html, body {
     background: linear-gradient(180deg, var(--secondary-bg) 0%, transparent 100%);
     border-bottom: 1px solid var(--border-color);
     height: 60px;
+    flex-shrink: 0;
 }
 
 .logo-section {
@@ -277,6 +280,7 @@ html, body {
     font-size: 12px;
     letter-spacing: 1px;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .live-dot {
@@ -286,6 +290,7 @@ html, body {
     border-radius: 50%;
     animation: livePulse 1.5s ease-in-out infinite;
     box-shadow: 0 0 10px var(--accent-green);
+    flex-shrink: 0;
 }
 
 @keyframes livePulse {
@@ -314,6 +319,7 @@ html, body {
     gap: 15px;
     padding: 15px;
     overflow: hidden;
+    min-height: 0;
 }
 
 /* Webcam Section */
@@ -322,6 +328,7 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-height: 0;
 }
 
 .webcam-container {
@@ -335,7 +342,7 @@ html, body {
     justify-content: center;
     overflow: hidden;
     aspect-ratio: 9 / 16;
-    min-height: 300px;
+    min-height: 0;
 }
 
 .webcam-placeholder {
@@ -460,6 +467,7 @@ html, body {
     justify-content: center;
     gap: 15px;
     min-width: 0;
+    min-height: 0;
 }
 
 .gameplay-area {
@@ -510,12 +518,14 @@ html, body {
     border-radius: 8px;
     overflow: hidden;
     backdrop-filter: blur(10px);
+    min-height: 0;
 }
 
 .chat-header {
     padding: 12px 15px;
     background: linear-gradient(180deg, var(--tertiary-bg) 0%, transparent 100%);
     border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .chat-title {
@@ -532,6 +542,7 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-height: 0;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -557,6 +568,7 @@ html, body {
     gap: 4px;
     font-size: 12px;
     animation: chatMessageSlide 0.3s ease-out;
+    flex-shrink: 0;
 }
 
 @keyframes chatMessageSlide {
@@ -707,6 +719,7 @@ html, body {
     gap: 10px;
     z-index: 1000;
     flex-wrap: wrap;
+    max-width: calc(100% - 40px);
 }
 
 .control-btn {
@@ -721,6 +734,7 @@ html, body {
     font-weight: 600;
     transition: all 0.3s ease;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    white-space: nowrap;
 }
 
 .control-btn:hover {
@@ -745,6 +759,15 @@ html, body {
     .chat-section {
         flex: 0 0 260px;
     }
+
+    .countdown-timer {
+        font-size: 40px;
+    }
+
+    .mascot-container {
+        width: 250px;
+        height: 250px;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -754,16 +777,6 @@ html, body {
     }
 
     .webcam-section {
-        flex: 0 0 220px;
-    }
-
-    .chat-section {
-        flex: 0 0 240px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .webcam-section {
         flex: 0 0 200px;
     }
 
@@ -771,8 +784,157 @@ html, body {
         flex: 0 0 220px;
     }
 
+    .countdown-timer {
+        font-size: 36px;
+    }
+
+    .mascot-container {
+        width: 220px;
+        height: 220px;
+    }
+
+    .progress-bar-container {
+        width: 250px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .webcam-section {
+        flex: 0 0 180px;
+    }
+
+    .chat-section {
+        flex: 0 0 200px;
+    }
+
     .gameplay-placeholder {
         font-size: 24px;
+    }
+
+    .countdown-timer {
+        font-size: 32px;
+    }
+
+    .mascot-container {
+        width: 200px;
+        height: 200px;
+    }
+
+    .status-indicator {
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+
+    .logo-small {
+        height: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .webcam-section {
+        flex: 0 0 200px;
+        order: 1;
+    }
+
+    .gameplay-section {
+        flex: 1;
+        order: 2;
+        min-height: 300px;
+    }
+
+    .chat-section {
+        flex: 0 0 150px;
+        order: 3;
+    }
+
+    .gameplay-placeholder {
+        font-size: 20px;
+    }
+
+    .countdown-timer {
+        font-size: 28px;
+    }
+
+    .mascot-container {
+        width: 180px;
+        height: 180px;
+    }
+
+    .status-indicator {
+        font-size: 10px;
+        padding: 6px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .starting-container {
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .logo-main {
+        height: 60px;
+    }
+
+    .mascot-container {
+        width: 150px;
+        height: 150px;
+    }
+
+    .countdown-timer {
+        font-size: 24px;
+    }
+
+    .progress-bar-container {
+        width: 200px;
+    }
+
+    .control-panel {
+        bottom: 10px;
+        left: 10px;
+        gap: 5px;
+    }
+
+    .control-btn {
+        padding: 8px 10px;
+        font-size: 9px;
+    }
+
+    .content-wrapper {
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .webcam-section {
+        flex: 0 0 120px;
+    }
+
+    .chat-section {
+        flex: 0 0 100px;
+    }
+
+    .gameplay-placeholder {
+        font-size: 16px;
+    }
+
+    .status-indicator {
+        font-size: 9px;
+        padding: 5px 6px;
+    }
+
+    .logo-small {
+        height: 30px;
+    }
+
+    .top-bar {
+        padding: 10px 12px;
+        height: 50px;
     }
 }
 
